@@ -1,3 +1,4 @@
+@use 'sass:color';
 @import 'settings/variables';
 
 :host {
@@ -41,6 +42,27 @@
 
   &:active {
     transform: scale(0.95);
+  }
+}
+
+.trend__action {
+  width: 72px;
+  height: 72px;
+  background-color: $primary;
+  border-radius: 50%;
+  border: none;
+  box-shadow: 0 6px 20px 0 rgba(241, 95, 65, 0.6);
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  right: 30px;
+
+  &:active {
+    transform: scale(0.95);
+  }
+
+  &>img {
+    filter: brightness(0) invert(1);
   }
 }
 

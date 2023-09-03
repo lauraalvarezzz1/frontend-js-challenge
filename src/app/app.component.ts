@@ -32,6 +32,9 @@ import { selectIsLoadingState } from './store/selectors';
     </nav>
     <main class="app-main-content">
       <router-outlet></router-outlet>
+      <button type="button" class="trend__action">
+        <img src="assets/Iconos/Actions/add.svg" alt="Agregar noticia" />
+      </button>
     </main>
   `,
   styleUrls: ['./app.component.scss'],
@@ -47,5 +50,5 @@ export class AppComponent {
   constructor(
     private breakpointsObserver: CustomBreakpointObserver,
     private store: Store
-  ) {}
+  ) { }
 }
