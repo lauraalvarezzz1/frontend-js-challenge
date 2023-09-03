@@ -1,0 +1,55 @@
+* {
+  box-sizing: border-box;
+  font-family: $font-family;
+}
+
+html,
+body {
+  box-sizing: inherit;
+  margin: 0;
+  padding: 0;
+}
+
+img,
+button {
+  user-select: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+
+.app-button {
+  margin: 0;
+  padding: 0;
+  border: none;
+  border-radius: 0.125rem;
+  font-size: 0.875rem;
+  text-decoration: none;
+  color: $font-color-dark;
+  min-height: 2.5rem;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+
+  &:active {
+    transform: scale(0.95);
+  }
+
+  &.app-button--primary {
+    color: $font-color-light;
+    background-color: $primary;
+  }
+
+  &.app-button--secondary {
+    color: $font-color-secondary;
+    background-color: transparent;
+  }
+}

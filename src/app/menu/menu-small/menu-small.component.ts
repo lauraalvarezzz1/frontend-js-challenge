@@ -1,0 +1,35 @@
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-menu-small',
+  template: `
+    <a
+      [routerLink]="['/trends', { provider: 'elpais' }]"
+      routerLinkActive="router-link-active"
+      [routerLinkActiveOptions]="{
+        matrixParams: 'exact',
+        queryParams: 'exact',
+        paths: 'exact',
+        fragment: 'exact'
+      }"
+      class="menu__option"
+    >
+      <img src="assets/Iconos/Favicon/favicon_el_pais.svg" alt="Icono de EL PAÍS" />
+    </a>
+    <a
+      [routerLink]="['/trends', { provider: 'elmundo' }]"
+      routerLinkActive="router-link-active"
+      [routerLinkActiveOptions]="{
+        matrixParams: 'exact',
+        queryParams: 'exact',
+        paths: 'exact',
+        fragment: 'exact'
+      }"
+      class="menu__option"
+    >
+      <img src="assets/Iconos/Favicon/favicon_el_mundo.svg" alt="Icono de EL MUNDO" />
+    </a>
+  `,
+  styleUrls: ['./menu-small.component.scss'],
+})
+export class MenuSmallComponent {}

@@ -1,0 +1,102 @@
+@import 'settings/variables';
+
+:host {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  align-items: stretch;
+  gap: 2rem;
+}
+
+.app-progress-bar {
+  position: fixed;
+  top: 0;
+}
+
+.app-header {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  padding-left: 1.5rem;
+  align-items: center;
+}
+
+.app-navigation {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  box-shadow: 2px 0px 20px rgba(0, 0, 0, 0.15);
+  background-color: #fff;
+  z-index: 1;
+}
+
+.app-main-content {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  overflow-y: auto;
+}
+
+.app-logo {
+  width: 6.25rem;
+
+  &:active {
+    transform: scale(0.95);
+  }
+}
+
+.app-current-date {
+  flex: 0 0 10rem;
+  height: 3.75rem;
+  background-color: $accent;
+  color: $font-color-light;
+  border-bottom-left-radius: 3.75rem;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  font-size: 0.75rem;
+  padding-right: 1.5rem;
+}
+
+@media screen and (min-width: 768px) {
+  :host {
+    display: grid;
+    grid-template-columns: 5.125rem 1fr;
+    grid-template-rows: 4.125rem 1fr;
+    gap: 2rem 0px;
+    grid-auto-flow: row;
+    grid-template-areas:
+      'navigation header'
+      'navigation main';
+    height: 100vh;
+  }
+
+  .app-navigation {
+    position: initial;
+    grid-area: navigation;
+  }
+
+  .app-header {
+    grid-area: header;
+  }
+
+  .app-main-content {
+    grid-area: main;
+  }
+
+  .app-header {
+    justify-content: flex-end;
+  }
+
+  .app-current-date {
+    flex: 0 0 18.125rem;
+    height: 4.125rem;
+    font-size: 0.875rem;
+    padding-right: 4rem;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  :host {
+    grid-template-columns: 16.75rem 1fr;
+  }
+}
