@@ -16,6 +16,8 @@ import { httpInterceptorProviders } from './app-http-interceptors';
 import { reducers } from './store/reducers';
 
 import localeEs from '@angular/common/locales/es';
+import { SharedModule } from './shared/shared.module';
+import { ReactiveFormsModule } from '@angular/forms';
 registerLocaleData(localeEs, 'es');
 
 @NgModule({
@@ -32,6 +34,7 @@ registerLocaleData(localeEs, 'es');
     AppMenuModule,
     StoreModule.forRoot(reducers),
     EffectsModule.forRoot([]),
+    SharedModule,
     StoreRouterConnectingModule.forRoot()
   ],
   providers: [{ provide: LOCALE_ID, useValue: 'es' }, httpInterceptorProviders],
