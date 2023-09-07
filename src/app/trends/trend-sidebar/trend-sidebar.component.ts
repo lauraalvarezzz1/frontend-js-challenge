@@ -13,7 +13,7 @@ export class TrendSidebarComponent implements OnInit {
   @Output() close = new EventEmitter<any>();
   @Input() width: number = 0;
   @Input() isToUpdate: boolean = false;
-  @Input() data = { url: '', provider: '', title: '' };
+  @Input() data = { url: '', provider: '', title: '', body: [''] };
   postForm: FormGroup;
   protected trend$ = this.store.select(selectSelectedTrend);
 
@@ -28,10 +28,12 @@ export class TrendSidebarComponent implements OnInit {
 
   ngOnInit() {
     if (this.data) {
+      let body = this.data.body.join('\n\n');
       this.postForm.patchValue({
         url: this.data.url,
         autor: this.data.provider,
-        titulo: this.data.title
+        titulo: this.data.title,
+        contenido: body
       })
     }
   }
