@@ -1,9 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 
 import { selectSelectedTrend } from '../store/selectors';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { sendTrend } from '../store/actions/trends-api.actions';
+import { sendTrend, updateTrend } from '../store/actions/trends-api.actions';
+import { Trend } from '../models/trend.model';
 
 @Component({
   selector: 'app-trend-sidebar',
@@ -14,9 +15,11 @@ export class TrendSidebarComponent implements OnInit {
   @Output() close = new EventEmitter<any>();
   @Input() width: number = 0;
   @Input() isToUpdate: boolean = false;
-  @Input() data = { url: '', provider: '', title: '', body: [''] };
+  @Input() data!: Trend;
   postForm: FormGroup;
   protected trend$ = this.store.select(selectSelectedTrend);
+  hasChange: boolean = false;
+  bodyToChange: any = {};
 
   constructor(private store: Store, private formBuilder: FormBuilder) {
     this.postForm = this.formBuilder.group({
@@ -37,11 +40,25 @@ export class TrendSidebarComponent implements OnInit {
         body: body
       })
     }
+    this.onFormValueChange();
+  }
+
+  onFormValueChange() {
+    const initialValue = this.postForm.value;
+    this.bodyToChange = {};
+    this.postForm.valueChanges.subscribe(() => {
+      this.hasChange = Object.keys(initialValue).some(key => this.postForm.value[key] != initialValue[key]);
+      Object.keys(initialValue).some(key => {
+        if (this.postForm.value[key] != initialValue[key]) {
+          this.bodyToChange[key] = this.postForm.value[key];
+        }
+      })
+    });
   }
 
   savePost() {
     if (this.postForm.valid) {
-      let body = {
+      let body: Trend = {
         url: this.postForm.get('url')?.value,
         provider: this.postForm.get('provider')?.value,
         title: this.postForm.get('title')?.value,
@@ -49,12 +66,16 @@ export class TrendSidebarComponent implements OnInit {
         image: 'https://emtstatic.com/2020/02/iStock-170222445.jpg'
       }
 
-      this.store.dispatch(sendTrend({trend: body}));
+      if (this.data) {
+        this.store.dispatch(updateTrend({ id: this.data.id!, trend: this.bodyToChange }));
+      } else {
+        this.store.dispatch(sendTrend({ trend: body }));
+      }
       this.closeModal();
     }
   }
 
-  closeModal() {
-    this.close.emit();
+  closeModal(data?: {}) {
+    this.close.emit(data);
   }
 }

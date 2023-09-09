@@ -22,3 +22,8 @@ export const sendTrend = createAction(
   '[Trends/API] Send Trend',
   props<{ trend: Trend }>()
 );
+
+export const updateTrend = createAction(
+  '[Trends/API] Update Trend',
+  props<{ id: string, trend: Trend }>()
+);

@@ -45,7 +45,17 @@ export class TrendsEffects {
         catchError(() => of(TrendsApiActions.loadTrendsError()))
       )
     )
-  ), { dispatch: false });
+  ));
+
+  updateTrend$ = createEffect(() => this.actions$.pipe(
+    ofType(TrendsApiActions.updateTrend),
+    switchMap((body) =>
+      this.trendService.updateTrend(body.id!, body.trend).pipe(
+        map((trend) => TrendsApiActions.updateTrend({id: trend.id!, trend: trend})),
+        catchError(() => of(TrendsApiActions.loadTrendsError()))
+      )
+    )
+  ));
 
   constructor(private actions$: Actions, private trendService: TrendService) { }
 }

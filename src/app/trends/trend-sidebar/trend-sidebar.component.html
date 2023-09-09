@@ -4,7 +4,7 @@
             <h4 class="title">{{isToUpdate ? 'Editar la' : 'Nueva'}} noticia</h4>
             <div>
                 <button class="secundario" (click)="closeModal()">Cancelar</button>
-                <button class="principal" [disabled]="postForm.invalid" (click)="savePost()">Guardar</button>
+                <button class="principal" [disabled]="postForm.invalid || !hasChange" (click)="savePost()">Guardar</button>
             </div>
         </div>
         <div class="trend_field">

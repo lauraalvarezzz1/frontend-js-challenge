@@ -47,4 +47,11 @@ export class TrendService {
       .post<GetOneTrendResponse>(this.getAllUrl, body)
       .pipe(map(({ trend }) => this.mapToTrendModel(trend)));
   }
+
+  public updateTrend(id: string, body: Trend): Observable<Trend> {
+    const url = `${this.getAllUrl}/${id}`;
+    return this.httpClient
+      .put<GetOneTrendResponse>(url, body)
+      .pipe(map(({ trend }) => this.mapToTrendModel(trend)));
+  }
 }
