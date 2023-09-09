@@ -7,6 +7,7 @@ import { routerNavigationAction } from '@ngrx/router-store';
 import * as TrendsApiActions from '../actions/trends-api.actions';
 import * as TrendsListPageActions from '../actions/trends-list-page.actions';
 import { TrendService } from '../../trend.service';
+import { Trend } from '../../models/trend.model';
 
 @Injectable()
 export class TrendsEffects {
@@ -36,5 +37,15 @@ export class TrendsEffects {
     );
   });
 
-  constructor(private actions$: Actions, private trendService: TrendService) {}
+  sendTrend$ = createEffect(() => this.actions$.pipe(
+    ofType(TrendsApiActions.sendTrend),
+    switchMap((body) =>
+      this.trendService.createTrend(body.trend).pipe(
+        map((trend) => TrendsApiActions.sendTrend({ trend })),
+        catchError(() => of(TrendsApiActions.loadTrendsError()))
+      )
+    )
+  ), { dispatch: false });
+
+  constructor(private actions$: Actions, private trendService: TrendService) { }
 }

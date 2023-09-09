@@ -32,7 +32,11 @@ export const trendsReducer = createReducer(
   ),
   on(TrendsApiActions.loadOneTrendError, (state): State => {
     return { ...state, selectedTrend: null };
-  })
+  }),
+  on(TrendsApiActions.sendTrend, (state, body ) => ({
+    ...state,
+    trend: [...[state.selectedTrend], body.trend]
+  })),
 );
 
 export const selectSelectedTrend = (state: State) => state.selectedTrend;
@@ -51,3 +55,6 @@ export const selectAllTrends = selectAll;
 
 // select the total trend count
 export const selectTrendTotal = selectTotal;
+
+// create new trend
+export const createNewTrend = selectTotal;

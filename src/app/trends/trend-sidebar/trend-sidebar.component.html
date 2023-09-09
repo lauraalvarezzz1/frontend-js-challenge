@@ -3,7 +3,7 @@
         <div class="trend_actions">
             <h4 class="title">{{isToUpdate ? 'Editar la' : 'Nueva'}} noticia</h4>
             <div>
-                <button class="secundario" (click)="cancel()">Cancelar</button>
+                <button class="secundario" (click)="closeModal()">Cancelar</button>
                 <button class="principal" [disabled]="postForm.invalid" (click)="savePost()">Guardar</button>
             </div>
         </div>
@@ -16,19 +16,19 @@
         <div class="trend_field">
             <label>Autor</label>
             <input type="text" 
-                formControlName="autor" 
+                formControlName="provider" 
                 placeholder="Manuel Gómez" />
         </div>
         <div class="trend_field">
             <label>Titulo</label>
             <input type="text" 
-                formControlName="titulo" 
+                formControlName="title" 
                 placeholder="Manuel Rodriguez" />
         </div>
         <div class="trend_field">
             <label>Contenido</label>
             <textarea type="text" 
-                formControlName="contenido"
+                formControlName="body"
                 placeholder="Escribe aquí..."></textarea>
         </div>
     </form>

@@ -41,4 +41,10 @@ export class TrendService {
       url: trendResponse.url,
     };
   }
+
+  public createTrend(body: Trend): Observable<Trend> {
+    return this.httpClient
+      .post<GetOneTrendResponse>(this.getAllUrl, body)
+      .pipe(map(({ trend }) => this.mapToTrendModel(trend)));
+  }
 }
