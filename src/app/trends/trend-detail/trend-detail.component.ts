@@ -1,4 +1,4 @@
-import { Component, Renderer2 } from '@angular/core';
+import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 
 import { selectSelectedTrend } from '../store/selectors';
@@ -26,12 +26,9 @@ export class TrendDetailComponent {
   menuState: string = 'out';
   isToUpdate: boolean = true;
 
-  constructor(private store: Store,
-    private renderer: Renderer2) { }
+  constructor(private store: Store) { }
 
   handleNav() {
     this.menuState = this.menuState === 'out' ? 'in' : 'out';
-    this.menuState === 'in' ? this.renderer.addClass(document.body, 'overflow_hidden') : 
-    this.renderer.removeClass(document.body, 'overflow_hidden');
   }
 }

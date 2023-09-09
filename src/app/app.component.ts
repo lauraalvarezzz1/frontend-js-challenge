@@ -1,4 +1,4 @@
-import { Component, Renderer2 } from '@angular/core';
+import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { delay } from 'rxjs/operators';
 
@@ -67,12 +67,9 @@ export class AppComponent {
   constructor(
     private breakpointsObserver: CustomBreakpointObserver,
     private store: Store,
-    private renderer: Renderer2,
   ) { }
 
   handleNav() {
     this.menuState = this.menuState === 'out' ? 'in' : 'out';
-    this.menuState === 'in' ? this.renderer.addClass(document.body, 'overflow_hidden') : 
-    this.renderer.removeClass(document.body, 'overflow_hidden');
   }
 }
