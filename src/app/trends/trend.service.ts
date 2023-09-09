@@ -30,18 +30,6 @@ export class TrendService {
       .pipe(map(({ trend }) => this.mapToTrendModel(trend)));
   }
 
-  private mapToTrendModel(trendResponse: TrendResponse): Trend {
-    return {
-      id: trendResponse._id,
-      body: trendResponse.body.split('\n\n'),
-      createdAt: new Date(trendResponse.createdAt),
-      image: trendResponse.image,
-      provider: trendResponse.provider as TrendProvider,
-      title: trendResponse.title,
-      url: trendResponse.url,
-    };
-  }
-
   public createTrend(body: Trend): Observable<Trend> {
     return this.httpClient
       .post<GetOneTrendResponse>(this.getAllUrl, body)
@@ -53,5 +41,24 @@ export class TrendService {
     return this.httpClient
       .put<GetOneTrendResponse>(url, body)
       .pipe(map(({ trend }) => this.mapToTrendModel(trend)));
+  }
+
+  public deleteTrend(id: string): Observable<Trend> {
+    const url = `${this.getAllUrl}/${id}`;
+    return this.httpClient
+      .delete<GetOneTrendResponse>(url)
+      .pipe(map(({ trend }) => this.mapToTrendModel(trend)));
+  }
+
+  private mapToTrendModel(trendResponse: TrendResponse): Trend {
+    return {
+      id: trendResponse._id,
+      body: trendResponse.body.split('\n\n'),
+      createdAt: new Date(trendResponse.createdAt),
+      image: trendResponse.image,
+      provider: trendResponse.provider as TrendProvider,
+      title: trendResponse.title,
+      url: trendResponse.url,
+    };
   }
 }

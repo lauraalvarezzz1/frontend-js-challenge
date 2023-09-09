@@ -27,3 +27,8 @@ export const updateTrend = createAction(
   '[Trends/API] Update Trend',
   props<{ id: string, trend: Trend }>()
 );
+
+export const deleteTrend = createAction(
+  '[Trends/API] Delete Trend',
+  props<{ id: string }>()
+);

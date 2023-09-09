@@ -41,7 +41,7 @@ export class TrendsEffects {
     ofType(TrendsApiActions.sendTrend),
     switchMap((body) =>
       this.trendService.createTrend(body.trend).pipe(
-        map((trend) => TrendsApiActions.sendTrend({ trend })),
+        map((trend) => TrendsApiActions.loadOneTrendSuccess({ trend })),
         catchError(() => of(TrendsApiActions.loadTrendsError()))
       )
     )
@@ -51,7 +51,17 @@ export class TrendsEffects {
     ofType(TrendsApiActions.updateTrend),
     switchMap((body) =>
       this.trendService.updateTrend(body.id!, body.trend).pipe(
-        map((trend) => TrendsApiActions.updateTrend({id: trend.id!, trend: trend})),
+        map((trend) => TrendsApiActions.loadOneTrendSuccess({trend: trend})),
+        catchError(() => of(TrendsApiActions.loadTrendsError()))
+      )
+    )
+  ));
+
+  deleteTrend$ = createEffect(() => this.actions$.pipe(
+    ofType(TrendsApiActions.deleteTrend),
+    switchMap((body) =>
+      this.trendService.deleteTrend(body.id).pipe(
+        map((trend) => TrendsApiActions.loadOneTrendSuccess({trend: trend})),
         catchError(() => of(TrendsApiActions.loadTrendsError()))
       )
     )
