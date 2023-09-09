@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 
 import { selectSelectedTrend } from '../store/selectors';
@@ -11,7 +11,7 @@ import { Trend } from '../models/trend.model';
   templateUrl: './trend-sidebar.component.html',
   styleUrls: ['./trend-sidebar.component.scss'],
 })
-export class TrendSidebarComponent implements OnInit {
+export class TrendSidebarComponent implements OnInit, OnChanges {
   @Output() close = new EventEmitter<any>();
   @Input() width: number = 0;
   @Input() isToUpdate: boolean = false;
@@ -31,20 +31,11 @@ export class TrendSidebarComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.data) {
-      let body = this.data.body.join('\n\n');
-      this.postForm.patchValue({
-        url: this.data.url,
-        provider: this.data.provider,
-        title: this.data.title,
-        body: body
-      })
-    }
-    this.onFormValueChange();
+    this.patchFormValue();
   }
 
   onFormValueChange() {
-    const initialValue = this.postForm.value;
+    let initialValue = this.postForm.value;
     this.bodyToChange = {};
     this.postForm.valueChanges.subscribe(() => {
       this.hasChange = Object.keys(initialValue).some(key => this.postForm.value[key] != initialValue[key]);
@@ -77,5 +68,24 @@ export class TrendSidebarComponent implements OnInit {
 
   closeModal(data?: {}) {
     this.close.emit(data);
+  }
+
+  patchFormValue() {
+    if (this.data) {
+      let body = this.data.body.join('\n\n');
+      this.postForm.patchValue({
+        url: this.data.url,
+        provider: this.data.provider,
+        title: this.data.title,
+        body: body
+      })
+      this.onFormValueChange();
+    }
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if(changes && changes['data'] && changes['data'].currentValue) {
+      this.patchFormValue();
+    }
   }
 }

@@ -3,6 +3,8 @@ import { Store } from '@ngrx/store';
 
 import { selectSelectedTrend } from '../store/selectors';
 import { animate, style, transition, trigger, state } from '@angular/animations';
+import { deleteTrend } from '../store/actions/trends-api.actions';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-trend-detail',
@@ -26,9 +28,14 @@ export class TrendDetailComponent {
   menuState: string = 'out';
   isToUpdate: boolean = true;
 
-  constructor(private store: Store) { }
+  constructor(private store: Store, private router: Router) { }
 
   handleNav() {
     this.menuState = this.menuState === 'out' ? 'in' : 'out';
+  }
+
+  delete(id: any) {
+    this.store.dispatch(deleteTrend({ id }));
+    this.router.navigate(['/trends'])
   }
 }
