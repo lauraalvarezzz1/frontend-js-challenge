@@ -67,7 +67,8 @@
     }
 
     input,
-    textarea {
+    textarea,
+    select {
       border: 0.6px solid rgba(216, 216, 216, 1);
       border-radius: 5px;
       padding: 10px;
@@ -83,6 +84,10 @@
 
     textarea {
       min-height: 402px;
+    }
+
+    select {
+      cursor: pointer;
     }
   }
 }

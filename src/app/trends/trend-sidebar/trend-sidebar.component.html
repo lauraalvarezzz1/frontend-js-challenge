@@ -4,7 +4,7 @@
             <h4 class="title">{{isToUpdate ? 'Editar la' : 'Nueva'}} noticia</h4>
             <div>
                 <button class="secundario" (click)="closeModal()">Cancelar</button>
-                <button class="principal" [disabled]="postForm.invalid || !hasChange" (click)="savePost()">Guardar</button>
+                <button class="principal" [disabled]="postForm.invalid && !hasChange" (click)="savePost()">Guardar</button>
             </div>
         </div>
         <div class="trend_field">
@@ -15,9 +15,12 @@
         </div>
         <div class="trend_field">
             <label>Autor</label>
-            <input type="text" 
-                formControlName="provider" 
-                placeholder="Manuel Gómez" />
+            <select formControlName="provider">
+                <option value="" disabled selected>Seleccione el autor</option>
+                <option value="elmundo">El mundo</option>
+                <option value="elpais">El pais</option>
+                <option value="levanteemv">Levante EMV</option>
+            </select>
         </div>
         <div class="trend_field">
             <label>Titulo</label>
