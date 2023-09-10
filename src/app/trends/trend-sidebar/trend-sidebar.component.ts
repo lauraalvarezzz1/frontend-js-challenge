@@ -5,6 +5,7 @@ import { selectSelectedTrend } from '../store/selectors';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { sendTrend, updateTrend } from '../store/actions/trends-api.actions';
 import { Trend } from '../models/trend.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-trend-sidebar',
@@ -21,11 +22,12 @@ export class TrendSidebarComponent implements OnInit, OnChanges {
   hasChange: boolean = false;
   bodyToChange: any = {};
 
-  constructor(private store: Store, private formBuilder: FormBuilder) {
+  constructor(private store: Store, private formBuilder: FormBuilder, private router: Router) {
     this.postForm = this.formBuilder.group({
       url: ['', [Validators.required]],
       provider: ['', [Validators.required]],
       title: ['', [Validators.required]],
+      image: ['', [Validators.required]],
       body: ['', [Validators.required]]
     });
   }
@@ -54,19 +56,21 @@ export class TrendSidebarComponent implements OnInit, OnChanges {
         provider: this.postForm.get('provider')?.value,
         title: this.postForm.get('title')?.value,
         body: this.postForm.get('body')?.value,
-        image: 'https://emtstatic.com/2020/02/iStock-170222445.jpg'
+        image: this.postForm.get('image')?.value
       }
 
       if (this.data) {
         this.store.dispatch(updateTrend({ id: this.data.id!, trend: this.bodyToChange }));
       } else {
         this.store.dispatch(sendTrend({ trend: body }));
+        this.router.navigate(['/trends']);
       }
       this.closeModal();
     }
   }
 
   closeModal(data?: {}) {
+    this.postForm.reset();
     this.close.emit(data);
   }
 
@@ -76,6 +80,7 @@ export class TrendSidebarComponent implements OnInit, OnChanges {
       this.postForm.patchValue({
         url: this.data.url,
         provider: this.data.provider,
+        image: this.data.image,
         title: this.data.title,
         body: body
       })
@@ -84,7 +89,7 @@ export class TrendSidebarComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if(changes && changes['data'] && changes['data'].currentValue) {
+    if (changes && changes['data'] && changes['data'].currentValue) {
       this.patchFormValue();
     }
   }
