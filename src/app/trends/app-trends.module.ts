@@ -11,6 +11,8 @@ import { TrendService } from './trend.service';
 import { TrendsListComponent } from './trends-list/trends-list.component';
 import { trendsEffects } from './store/effects';
 import { trendsFeatureKey, trendsReducer } from './store/reducers';
+import { SharedModule } from '../shared/shared.module';
+import { TrendSideBarModule } from './trend-sidebar/trend-sidebar.module';
 
 @NgModule({
   declarations: [TrendsListComponent, TrendDetailComponent],
@@ -18,6 +20,8 @@ import { trendsFeatureKey, trendsReducer } from './store/reducers';
     CommonModule,
     AppTrendsRoutingModule,
     HttpClientModule,
+    SharedModule,
+    TrendSideBarModule,
     StoreModule.forFeature(trendsFeatureKey, trendsReducer),
     EffectsModule.forFeature(trendsEffects),
   ],

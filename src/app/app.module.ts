@@ -16,6 +16,8 @@ import { httpInterceptorProviders } from './app-http-interceptors';
 import { reducers } from './store/reducers';
 
 import localeEs from '@angular/common/locales/es';
+import { SharedModule } from './shared/shared.module';
+import { TrendSideBarModule } from './trends/trend-sidebar/trend-sidebar.module';
 registerLocaleData(localeEs, 'es');
 
 @NgModule({
@@ -30,6 +32,8 @@ registerLocaleData(localeEs, 'es');
     AppRoutingModule,
     AppLayoutModule,
     AppMenuModule,
+    SharedModule,
+    TrendSideBarModule,
     StoreModule.forRoot(reducers),
     EffectsModule.forRoot([]),
     StoreRouterConnectingModule.forRoot()

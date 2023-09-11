@@ -30,6 +30,26 @@ export class TrendService {
       .pipe(map(({ trend }) => this.mapToTrendModel(trend)));
   }
 
+  public createTrend(body: Trend): Observable<Trend> {
+    return this.httpClient
+      .post<GetOneTrendResponse>(this.getAllUrl, body)
+      .pipe(map(({ trend }) => this.mapToTrendModel(trend)));
+  }
+
+  public updateTrend(id: string, body: Trend): Observable<Trend> {
+    const url = `${this.getAllUrl}/${id}`;
+    return this.httpClient
+      .put<GetOneTrendResponse>(url, body)
+      .pipe(map(({ trend }) => this.mapToTrendModel(trend)));
+  }
+
+  public deleteTrend(id: string): Observable<Trend> {
+    const url = `${this.getAllUrl}/${id}`;
+    return this.httpClient
+      .delete<GetOneTrendResponse>(url)
+      .pipe(map(({ trend }) => this.mapToTrendModel(trend)));
+  }
+
   private mapToTrendModel(trendResponse: TrendResponse): Trend {
     return {
       id: trendResponse._id,

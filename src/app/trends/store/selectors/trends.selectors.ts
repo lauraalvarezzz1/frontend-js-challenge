@@ -24,6 +24,11 @@ export const selectAllTrends = createSelector(
   fromTrendsReducer.selectAllTrends
 );
 
+export const createdTrend = createSelector(
+  selectTrendsState,
+  (state) => state.selectedTrend
+);
+
 export const selectTrendsByProvider = createSelector(
   selectAllTrends,
   selectRouteParams,

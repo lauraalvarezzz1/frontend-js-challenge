@@ -4,6 +4,7 @@ import { delay } from 'rxjs/operators';
 
 import { CustomBreakpointObserver } from './layout';
 import { selectIsLoadingState } from './store/selectors';
+import { animate, style, transition, trigger, state } from '@angular/animations';
 
 @Component({
   selector: 'app-root',
@@ -32,8 +33,26 @@ import { selectIsLoadingState } from './store/selectors';
     </nav>
     <main class="app-main-content">
       <router-outlet></router-outlet>
+      <button type="button" class="trend__action" (click)="handleNav()">
+        <img src="assets/Iconos/Actions/add.svg" alt="Agregar noticia" />
+      </button>
+      <app-trend-sidebar class="sidenav" 
+        [@slideInOut]="menuState"
+        (close)="handleNav()"></app-trend-sidebar>
     </main>
   `,
+  animations: [
+    trigger('slideInOut', [
+      state('in', style({
+        transform: 'translate3d(0,0,0)'
+      })),
+      state('out', style({
+        transform: 'translate3d(100%, 0, 0)'
+      })),
+      transition('in => out', animate('400ms ease-in-out')),
+      transition('out => in', animate('400ms ease-in-out'))
+    ]),
+  ],
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
@@ -43,9 +62,14 @@ export class AppComponent {
   isLargeScreen$ = this.breakpointsObserver.isLarge$;
   // The delay prevents ExpressionChangedAfterItHasBeenCheckedError
   isLoading$ = this.store.select(selectIsLoadingState).pipe(delay(0));
+  menuState: string = 'out';
 
   constructor(
     private breakpointsObserver: CustomBreakpointObserver,
     private store: Store
-  ) {}
+  ) { }
+
+  handleNav() {
+    this.menuState = this.menuState === 'out' ? 'in' : 'out';
+  }
 }

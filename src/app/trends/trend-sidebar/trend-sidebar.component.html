@@ -1,0 +1,44 @@
+<div id="mySidenav" class="sidenav">
+    <form [formGroup]="postForm">
+        <div class="trend_actions">
+            <h4 class="title">{{isToUpdate ? 'Editar la' : 'Nueva'}} noticia</h4>
+            <div>
+                <button class="secundario" (click)="closeModal()">Cancelar</button>
+                <button class="principal" [disabled]="postForm.invalid && !hasChange" (click)="savePost()">Guardar</button>
+            </div>
+        </div>
+        <div class="trend_field">
+            <label>URL</label>
+            <input type="text" 
+                formControlName="url" 
+                placeholder="www.post.com" />
+        </div>
+        <div class="trend_field">
+            <label>Autor</label>
+            <select formControlName="provider">
+                <option class="placeholder" value="" disabled selected>Seleccione el autor</option>
+                <option value="elmundo">El mundo</option>
+                <option value="elpais">El pais</option>
+                <option value="levanteemv">Levante EMV</option>
+            </select>
+        </div>
+        <div class="trend_field">
+            <label>Titulo</label>
+            <input type="text" 
+                formControlName="title" 
+                placeholder="Manuel Rodriguez" />
+        </div>
+        <div class="trend_field">
+            <label>Imagen URL</label>
+            <input type="text" 
+                formControlName="image" 
+                placeholder="www.imageurl.com" />
+        </div>
+        <div class="trend_field">
+            <label>Contenido</label>
+            <textarea type="text" 
+                formControlName="body"
+                placeholder="Escribe aquí..."></textarea>
+        </div>
+    </form>
+</div>
