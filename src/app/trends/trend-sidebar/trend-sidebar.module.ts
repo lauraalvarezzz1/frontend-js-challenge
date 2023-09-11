@@ -4,7 +4,7 @@ import { NgModule } from "@angular/core";
 
 @NgModule({
   declarations: [
-    TrendSidebarComponent,
+    TrendSidebarComponent
   ],
   imports: [
     SharedModule

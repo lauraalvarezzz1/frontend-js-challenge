@@ -66,7 +66,7 @@ export class AppComponent {
 
   constructor(
     private breakpointsObserver: CustomBreakpointObserver,
-    private store: Store,
+    private store: Store
   ) { }
 
   handleNav() {

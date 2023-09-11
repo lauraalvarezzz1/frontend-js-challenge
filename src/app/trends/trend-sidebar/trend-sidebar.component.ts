@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { Store, select } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 
 import { selectSelectedTrend } from '../store/selectors';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -41,7 +41,7 @@ export class TrendSidebarComponent implements OnInit, OnChanges {
     this.bodyToChange = {};
     this.postForm.valueChanges.subscribe(() => {
       this.hasChange = Object.keys(initialValue).some(key => this.postForm.value[key] != initialValue[key]);
-      Object.keys(initialValue).some(key => {
+      Object.keys(initialValue).map(key => {
         if (this.postForm.value[key] != initialValue[key]) {
           this.bodyToChange[key] = this.postForm.value[key];
         }
@@ -62,15 +62,15 @@ export class TrendSidebarComponent implements OnInit, OnChanges {
       if (this.data) {
         this.store.dispatch(updateTrend({ id: this.data.id!, trend: this.bodyToChange }));
       } else {
-        this.store.dispatch(sendTrend({ trend: body }));
+        this.postForm.reset();
         this.router.navigate(['/trends']);
+        this.store.dispatch(sendTrend({ trend: body }));
       }
       this.closeModal();
     }
   }
 
   closeModal(data?: {}) {
-    this.postForm.reset();
     this.close.emit(data);
   }
 
@@ -87,6 +87,8 @@ export class TrendSidebarComponent implements OnInit, OnChanges {
       this.onFormValueChange();
     }
   }
+
+
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes && changes['data'] && changes['data'].currentValue) {
